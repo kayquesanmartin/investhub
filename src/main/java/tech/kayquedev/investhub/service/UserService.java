@@ -17,7 +17,7 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public void createUser(CreateUserDto createUserDto) {
+    public UUID createUser(CreateUserDto createUserDto) {
         var entity = new User(
                 UUID.randomUUID(),
                 createUserDto.username(),
@@ -26,6 +26,8 @@ public class UserService {
                 Instant.now(),
                 null);
 
-        userRepository.save(entity);
+        var userSaved = userRepository.save(entity);
+
+        return userSaved.getUserId();
     }
 }

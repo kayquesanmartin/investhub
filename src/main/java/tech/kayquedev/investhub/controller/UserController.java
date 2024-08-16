@@ -6,6 +6,8 @@ import tech.kayquedev.investhub.dtos.CreateUserDto;
 import tech.kayquedev.investhub.entity.User;
 import tech.kayquedev.investhub.service.UserService;
 
+import java.net.URI;
+
 @RestController
 @RequestMapping("/v1/users")
 public class UserController {
@@ -18,8 +20,8 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<User> createUser(@RequestBody CreateUserDto createUserDto){
-        userService.createUser(createUserDto);
-        return null;
+        var userId = userService.createUser(createUserDto);
+        return ResponseEntity.created(URI.create("v1/users" + userId.toString())).build();
     }
 
     @GetMapping("/{userId}")
